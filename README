@@ -1,6 +1,6 @@
 Decuda sm_1_1 (G80) disassembler version 0.4.x
 
-Wladimir J. van der Laan <laanwj@gmail.com>, 2007
+Wladimir J. van der Laan <laanwj@gmail.com>, 2007-2009
 
 This is my shot at providing an disassembler for the raw G8x cubin
 instructions,  It was a big mystery for everyone, as NVIDIA is unwilling to
