@@ -1,0 +1,30 @@
+architecture {sm_10}
+abiversion {0}
+modname {cubin}
+sampler  {
+	name = ref3
+	texunit = 2
+}
+sampler  {
+	name = ref2
+	texunit = 1
+}
+sampler  {
+	name = ref1
+	texunit = 0
+}
+code  {
+	name = my_kernel
+	lmem = 0
+	smem = 24
+	reg = 8
+	bar = 0
+	bincode  {
+		0x1000c81d 0x0423c780 0xd00e0e01 0x80a00780 
+		0x10008010 0x10008214 0x10000419 0x0403c780 
+		0xf2840411 0x0000c784 0x10008004 0x10008800 
+		0xb0000c09 0xc0004780 0x90000409 0xc0000780 
+		0xb0028a0c 0x10008a08 0xf4000005 0x00000784 
+		0xd00e0e01 0xa0a00781 
+	}
+}

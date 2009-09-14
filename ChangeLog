@@ -1,0 +1,217 @@
+2009-08-20  Sylvain Collange <sylvain.collange@univ-perp.fr>
+	* Fixed number of bits of operand 4 constant segment
+	* Added Abs/Sat and rounding mode modifiers to cvt0 (I2I)
+	* Fixed number of bits of operand 3
+	* Added mad24.s16 and mad24 with carry
+	* Reduced madness in mad.f32/mac.f32 (hopefully)
+	* Added .atom flag for atomic shared memory moves (SM 1.2)
+	* Added double-precision instruction decoding (SM 1.3)
+
+2006-06-20  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Fix command line options, especially -k
+	* Default to plain not ansi output
+
+2008-06-11  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Rename decuda to decuda.py and cudasm to cudasm.py,
+	  this is more convenient for windows users.
+
+2008-01-03  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Add 0x12 instruction (load from shared) to assembler and
+	  disassembler
+
+2007-12-22  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Fix deltaf instruction for disassembler
+
+2007-12-07  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* re-assembly fixes
+	* support inversion (~) on logic ops
+	* assembler operand lookup restructured
+	* factor out important constants from assembler rule table, this
+	makes it easier to just cache the data structure later on, for
+	improved load time.
+	* Release 0.4.1
+
+2007-12-06  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* add all half instructions into instruction table
+	* fix flip bits for half add instruction
+	* simplify operand specification in instruction table
+	* finish rules for all halfops except tex
+	* finish rules for all immops
+	* add .half on disassembly of half instructions (for easier
+	re-assembly)
+	* remove debugging stuff from CubinFile, change Formatter in
+	preparation to re-parse segments
+	* Immediate values ending on 0xf were being rejected, solved
+	* disassemble bar.sync in a sane way
+
+2007-12-05  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* found out and/xor/or/not instruction format
+        * fix not instruction
+	* add support for .half 32 bit instructions (for now, only add and
+        mov)
+	* fix constant segment in half instructions
+	* post-increment offset registers ($ofs+=4)
+        * remove [$ofsX+$rX] addressing mode as it doesn't exist
+
+2007-12-03  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* cvt.neg instruction added
+
+2007-12-02  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* "Immediate operand 3" is only allowed on a few instructions, mad
+	  and others that use subsubop bits as an input are certainly not
+	  one of them.
+	* Version 0.4.0
+
+2007-12-01  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Improve error reporting of assembler somewhat
+
+2007-11-30  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* mul24 instruction fixes (quite nasty)
+        * basic flow control
+        * labels are resolved
+        * predication (in and out)
+        * assembler is now functional
+        * format predicates and labels in re-parsable format
+        * Logic.py contains all condition code / flag combinations
+
+2007-11-29  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* cvt instruction fixes (half/full reg confusion)
+	* more assembler work
+	* Instruction.__repr__() actually changed operands. Oops.
+        * added cudasm
+        * cubin file loading and writing factored out to CubinFile class
+
+2007-11-27  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Finally found out the meaning of subsubop in ld.const: type, like
+	  in shared memory load
+        * Release 0.3.1
+
+2007-11-25  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Assembler rules for operand selection cleaned up
+        * st.shared disassembler cleaned up, bit meanings now known
+        * there is no st or ld, only mov, without changes of perspective
+
+2007-11-23  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Beginnings of assembler
+        * Get rid of multiplier in s[....] and c[....]
+        * d.u32 instruction to inject raw data
+        * Fix bug in disassemble offset registers, where $ofs4 was
+        erronously displayed as $ofs1
+        * More addressing fixes
+
+2007-11-18  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Update readme on global memory segments
+        * promote OP_SIGN_NONE operands if one of the operands is signed
+        * Interpretation of alt bit for add.u32 instruction was wrong, it
+        flips the result, not one of the operands
+        * Register naming to decimal
+
+2007-11-13  Wladimir J. van der Laan <laanwj@gmail.com>
+
+        * Instructions can source from constant segment 2 or 3 as well
+        * Fill in condition codes
+        * Output registers added (as used in vertex shaders)
+        * Float16 conversion
+        * Release 0.3.0
+        * All condition codes complete (afaik)
+
+2007-11-12  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* decudaraw util - decode raw cubin code from commandline, useful
+	for disassembling shaders in mmio logs.
+
+2007-11-09  Wladimir J. van der Laan <laanwj@gmail.com>
+
+        * subsubop and subop are now a property instead of an attribute.
+	This helps find cases in which they are missed.
+	* Added an extensive internal debugging system to account for 
+	each bit set in instruction words. This will, ultimately, help
+	a lot when writing the assembler counterpart.
+        * Heed 'ignore result' bit, no more register $r7f.
+        * addc (add with carry) instruction.
+        * add rounding op for add.f32.
+        * sop.4 and sop.5 defined
+	* some instructions are not predicated (nop, bar, some flow control)
+        * rounding mode for mad
+
+2007-11-08  Wladimir J. van der Laan <laanwj@gmail.com>
+
+        * Last argument of mad.f32 comes from register
+        * Release 0.2.9
+        * remove self.flags, this served no purpose beyond to confuse
+        bitfields
+        * solve an issue with constant operands (hopefully)
+        * self.bits(i,mask) instead of manually and/shift to clean up code
+        * mark visited bits, warn if we neglected any
+
+2007-11-03  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Sanitize output type of tex instructions to b32. We can't be sure 
+	  what this is anyway, as it depends on the type of sampler.
+        * Print embedded const segments
+        * Extend README on G80 hardware
+        * Add .end modifier to last instruction, to make sure the GPU stops
+	  executing this has a special marker.
+        * Texture instruction types 3 and 5 are unknown.
+
+2007-11-02  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* st.local and friends can use the index register+immediate as well
+	* Try to get some meaning out of unknown predicates like @$10
+	* Version 0.2.6
+	* ld.pred and st.pred instructions
+	* There are four offset registers, and there was an hidden extra bit 
+	  signifying bit 2 of the offset
+        * Predicate registers are now separate register class, as they should be
+	* Disassemble all kernels in the cubin file by default
+        * Version 0.2.7
+        * Sign bits in the add.f32 instruction are now used
+        * ldgpu loads from internal register space, nothing more
+        * tex instruction solved
+        * Version 0.2.8
+
+2007-10-31  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Grid parameters aren't in a separate space after all, just in a
+	  special type (u16)
+        * Version 0.2.5
+
+2007-10-30  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Change G80 hardware section in Readme to reflect new findings
+	* Version 0.2.4
+
+2007-10-29  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Make shared memory / grid parameter handling saner
+	* Version 0.2.3 release
+        * Multiple constant segments (up to 16)
+        * cvn.sat instruction is decoded without glitch now
+        * half-registers ($rx.low, $rx.high) now supported as separate operand type
+        * Fix handling of offset registers
+
+2007-10-27  Wladimir J. van der Laan <laanwj@gmail.com>
+
+	* Version 0.2.2 was released.
+	* Add better error reporting, so buggy texture instructions don't
+	  crash disassembly.
+	* Version 0.2.1 was released.
+	* Adds -p and -n options, and solves some problem is disassembling
+	  ld.shared instructions.
+	* This file was created.

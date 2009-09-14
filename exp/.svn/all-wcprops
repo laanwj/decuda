@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/repos/!svn/ver/547/decuda/trunk/exp
+END
+asm
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/repos/!svn/ver/539/decuda/trunk/exp/asm
+END
+readshared.cubin
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/repos/!svn/ver/403/decuda/trunk/exp/readshared.cubin
+END
+insttest.cu
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/repos/!svn/ver/535/decuda/trunk/exp/insttest.cu
+END
+readshared2.cubin
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/repos/!svn/ver/403/decuda/trunk/exp/readshared2.cubin
+END
+exec.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/repos/!svn/ver/547/decuda/trunk/exp/exec.cpp
+END
+readshared.cu
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/repos/!svn/ver/403/decuda/trunk/exp/readshared.cu
+END
+readshared2.cu
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/repos/!svn/ver/403/decuda/trunk/exp/readshared2.cu
+END
+logigen.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/repos/!svn/ver/535/decuda/trunk/exp/logigen.py
+END
+insttest.asm
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/repos/!svn/ver/547/decuda/trunk/exp/insttest.asm
+END
+readshared.ptx
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/repos/!svn/ver/403/decuda/trunk/exp/readshared.ptx
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/repos/!svn/ver/487/decuda/trunk/exp/Makefile
+END
+readshared2.ptx
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/repos/!svn/ver/403/decuda/trunk/exp/readshared2.ptx
+END

@@ -1,0 +1,77 @@
+	.version 1.0
+	.target compute_10, map_f64_to_f32
+	//  compiled with /usr/local/cuda/open64/lib//be
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_00002098_00000000-1.i (/tmp/ccI#.l8pNmJ)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:compute_10, Endian:little, Pointer Size:64
+	//  -O2	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"/tmp/tmpxft_00002098_00000000-5.gpu"
+	.file	2	"/usr/lib/gcc/x86_64-linux-gnu/4.1.2/include/stddef.h"
+	.file	3	"/usr/local/cuda/bin/../include/crt/device_runtime.h"
+	.file	4	"/usr/local/cuda/bin/../include/host_defines.h"
+	.file	5	"/usr/local/cuda/bin/../include/crt/storage_class.h"
+	.file	6	"/usr/local/cuda/bin/../include/builtin_types.h"
+	.file	7	"/usr/local/cuda/bin/../include/device_types.h"
+	.file	8	"/usr/local/cuda/bin/../include/driver_types.h"
+	.file	9	"/usr/local/cuda/bin/../include/texture_types.h"
+	.file	10	"/usr/local/cuda/bin/../include/vector_types.h"
+	.file	11	"/usr/local/cuda/bin/../include/device_launch_parameters.h"
+	.file	12	"/home/wladimir/dump/test20.cu"
+	.file	13	"/usr/local/cuda/bin/../include/common_functions.h"
+	.file	14	"/usr/local/cuda/bin/../include/crt/func_macro.h"
+	.file	15	"/usr/local/cuda/bin/../include/math_functions.h"
+	.file	16	"/usr/local/cuda/bin/../include/device_functions.h"
+	.file	17	"/usr/local/cuda/bin/../include/math_constants.h"
+	.file	18	"/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+	.file	19	"/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+	.file	20	"/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h"
+
+
+	.entry my_kernel
+	{
+	.reg .b32 $r0,$r1,$r2,$r3;
+        .reg .u64 $rd1;
+        .reg .pred $p0,$p1,$p2,$p3,$p4,$p5,$p6,$p7;
+        .reg .f32 $r,$g,$b,$a,$rx,$gx,$bx;
+        .reg .f32 $x,$y,$z,$w;
+	.param .u64 __cudaparm_x;
+  	.tex .u64 ref1;
+  	.tex .u64 ref2;
+  	.tex .u64 ref3;
+ld.param.u64 	$rd1, [__cudaparm_x];
+ld.global.v4.f32  {$x,$y,$z,$w}, [$rd1+0];
+
+tex.1d.v4.f32.f32 {$rx,$g,$bx,$a},ref1,{$x,$y,$z,$w};
+tex.2d.v4.f32.f32 {$rx,$gx,$bx,$a},ref2,{$x,$y,$z,$w};
+tex.3d.v4.f32.f32 {$r,$gx,$b,$a},ref3,{$x,$y,$z,$w};
+
+//setp.eq.u32 $p0, $x, $y;
+//@$p1 bra test;
+//st.global.v4.u32  [$rd1+2], {$r,$g,$b,$a};
+//exit;
+
+//test:
+
+ex2.f32 $a, $a;
+//add.f32 $a, $a, $b;
+sub.f32 $a, $a, $b;
+
+st.global.v4.b32  [$rd1+0], {$r,$g,$b,$a};
+//bra.uni test
+
+//breakpt;
+
+
+	exit;
+
+	} // my_kernel

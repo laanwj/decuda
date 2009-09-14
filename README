@@ -1,0 +1,229 @@
+Decuda sm_1_1 (G80) disassembler version 0.4.x
+
+Wladimir J. van der Laan <laanwj@gmail.com>, 2007
+
+This is my shot at providing an disassembler for the raw G8x cubin
+instructions,  It was a big mystery for everyone, as NVIDIA is unwilling to
+provide any information, but after a lot of experimentation it appears I 
+figured out most of it.
+
+Note that I acquired all the information by differential analysis on
+the cubin files produced by ptxas and extensive experimentation on the
+results. It is not based on reverse engineering of hardware or software.
+
+I tried to mimic <i>PTX<i> instructions as closely as possible in the output, 
+for an overview of the <i>PTX</i> assembly language see PTX_ISA_x.x.PDF in 
+the doc directory of the NVIDIA CUDA package.
+
+Note that this is an initial version, probably full of bugs. Let me know 
+if you find any problems or have questions.
+
+== Usage ==
+
+Using the disassembler
+
+Usage: decuda.py [OPTION]... [FILE]...
+
+-p, --plain             Don't colorize output
+-h, --help              Show this help screen
+-k, --kernel-name <x>   Disassembly kernel name <x> of the cubin file
+-n, --kernel-number <x> Disassemble kernel number <x> of the cubin file
+-o, --output-file <x>   Output the kernel in assembler-compatible format to a file
+
+Standard is ANSI colorized output, pipe through less -r to view this most
+effectively. If color is not desired, use the -p flag.
+
+Starting from version 0.3.0, decuda has an extensive internal debugging 
+system and  logs each bit of the instruction that is visited (or not). 
+Unvisited bits are assumed to be 0. If not, a warning is issued like 
+'unk0 00400000'. This means that one of the high bits of the first 
+instruction word is unaccounted for. Usually, this means the instruction 
+has some slightly other meaning than decuda thinks it is: different 
+operands, alternative interpretations, ... Please
+let me know if you find out the meaning of unknown bits.
+
+Using the assembler:
+
+Usage: cudasm [OPTION]... [FILE]...
+
+-h, --help              Show this help screen
+-k, --kernel-name <x>   Name of the kernel to assemble
+-o, --output-file <x>   Name of output file
+
+Converts an assembler text file to a .cubin binary file that can be used
+with the CUDA API.
+
+Note: the assembler is in beta stage, although I've taken care to verify
+that instructions assemble back into a form that is disassembled succesfully
+by the disassembler, it is very possible that I'm missing some bits and
+pieces or got the arguments wrong.
+
+== TODO ==
+
+- Things to check (assembler)
+    - texture instructions can have unk1.00000004
+    - there is still some mad madness left (overlapping bitfields?)
+    - what does sign bit in setf do? I appears that it must always be set, if not,
+      it returns 0 in every case (except 0,0x7FFFFF/0x800000 it appears)
+    - BF_CONSTSEG_X/BF_CONSTSEG (does every instruction support 4 bit constseg?)
+    - bar.sync has various parameters: at least the barrier id (0-15?), but
+      also at least two bitfields, if which one is always 0xfff. This is
+      interesting because it might allow for synchronisation of only a part of
+      the block instead of the whole thing. Each bit could be 32 or 64
+      threads.
+    - op3_imm flag, where can it be used? only in shl/shr/set/...?
+    - BF_ALT bit on full fadd instruction, what does it do?
+    - what is halfop 0x70? looks like another mad
+    - mad(integer) instruction, if both operands are flipped (0x0c000000),
+    something special happens; add carry maybe?
+- Assembler
+    - Warn or error when operands get ignored: predicate in, operand
+      flip/invert*
+    - More specific error reporting in general
+    - Texture instructions are not parsed and not assembled yet
+    - Constant data is not parsed yet
+- Fill in constants, if they refer to the local segment (c1). Make this
+  optional.
+- Our own CUDA-like compiler. http://llvm.org/ looks like a good open source
+  replacement for nvcc and ptx. It handles the optimization and parsing,
+  making actual code is a matter of writing a backend.
+- Chip-level emulator?
+
+== G80 Hardware ==
+
+There are 32 and 64 bit instructions. Most instructions are 64 bit, but sometimes 
+two simple instructions can be fit into one 64 bit word. (how this relates
+to dual-issue, I don't know).
+
+There are two classes of instruction: flow control instructions, and normal
+instructions. Flow control instructions are bra, return, call, join, trap
+and others. These all have an immediate (or no) argument and don't work on
+instructions. Normal instructions do calculations and memory access.
+
+G8x can address various different memory spaces:
+
+- Registers. These are addressed with $r00 .. $r7f. Register $7f seems to be
+a special 'bit bucket' register when no output is desired. Registers can be
+addressed as 32 bit full register, or as 16 bit half (.lo and .hi).
+
+- Shared memory, consisting of the grid parameters like blockIdx,
+threadIdx and others. It also contains the program parameters, and shared
+variables you declare. This is addressed using s[0x...].
+
+Shared memory is prefixed by a header of 16 bytes, which contains
+8 unsigned shorts. These are %gridflags, %ntid.*, %nctaid.x|y,
+ctaid.x|y. Apart from these parameters being there it is normal, writable
+shared memory.
+
+- There are up to 16 constant memory segments, one for constants local to the kernel (segment 
+1) and one for "global" constants (segment 0). Another (segment 14) is used
+for relocations of global memory variables.
+In contrary to common belief, these are not global in the program, but in the cubin file. It appears
+they are limited to 64k. These are addressed using c0[0x...] and c1[0x...]
+and so on.
+This is analogous to the DirectX10 constant buffer. Here the 16 segments
+are called slots.
+
+- Then there is global and local memory that are accessed in a similar way,
+which is to be expected as they are the same from the hardware side. These
+are adressed using g[0x....] and l[0x....] respectively. Reads and writes to
+this memory can be 8, 16, 32, 64 or 128 bits.
+
+There are 16 global memory segments, just like there are 16 constant memory
+segments, but they are independent. CUDA only uses segment 14 (0xe). Why 16 segments
+are supported is unknown to me. Maybe it is used when loading from memory
+buffers in DirectX 10 as well.
+
+Addressing memory is quite interesting. It appears that there are four offset registers
+(on current hardware) $ofs1, $ofs2, $ofs3 and $ofs4. These are used to add an
+offset to the immediate offsets encoded in the instructions. Offsets can be loaded
+by providing an immediate value, by adding an immediate value, or by using a register and 
+a shift value. There are three bits reserved for the offset register, of
+which 000 means use no offset. In theory there is place for 7 offset
+registers. Ptxas only ever uses four though.
+
+There are also a few internal values that can be read out: %physid, %clock,
+%pm0, %pm1, %pm2 and %pm3. 
+
+- %physid contains information about the current thread. In the topic 
+  http://forums.nvidia.com/index.php?showtopic=45458 it is
+  tried to find out what this one extactly means. It appears the format is 
+  multiprocessor_ID*0x10000+warp_ID*0x100+position_in_warp
+  where multiprocessor_ID seems to be one of the following 16 values:
+  00 10 20 30 40 50 60 70 01 11 21 31 41 51 61 71
+  and position_in_warp is 0x00 to 0x1F
+- %clock is a cycle counter.
+- %pm0..%pm3  (power mode?)
+
+A special kind of register is the predicate register. G80 supports four of
+these. Almost every instruction can output a result to a predicate register.
+Instructions can be predicated so that they are only executed when that
+predicate is true (@$p0), or false (!$p0). Apart from being true and false
+it appears there are some more condition codes, but I haven't found out what
+they mean yet.
+
+The most complex instruction appears to be the tex instruction. The G80 can
+sample from 1D, 2D and 3D textures using integer or floating point
+coordinates. It can output one to four values, arbitrarily selected from 
+{r,g,b,a}. The instruction exposed in CUDA is the basic non-mipmapped 
+texture fetch. It would be interesting to know what the opcodes of the other
+textureing instructions are, but unless we find a way to get the raw cubin
+of a shader, we're stuck.
+
+CUDA programs 'live' in a sandbox private memory space of 4GB. As the G80
+has virtual addressing, memory regions that the CUDA context needs for
+constants, global memory and shader code are mapped into this space. Cubin
+code is DMA'ed to the card unchanged, with the exception of flow control
+instructions which are relocated to their new address in the sandbox.
+
+- global loads and stores take a whole-register argument
+
+- set instruction: return 0xffffffff if condition holds, 0x00000000 otherwise
+
+- flags (predicicate)
+1  Z  zero flag
+2  S  sign flag
+4  C  carry flag
+8  O  overflow flag
+
+For a table of the possible flag combinations against condition codes, see
+Logic.py. logigen.py in the root directory generates this table according to
+the description in the G80 opengl shader reference, 
+http://developer.download.nvidia.com/opengl/specs/g80specs.pdf . It appears
+this matches, apart from condition ne.
+
+Conditions on zf: zf is ne, nzf is equ
+
+- assembler supports 'd.u32' to insert raw instruction data
+- half (32 bit) instructions must always be issued in pairs
+- half instructions: oper3 high bit is const segment (0 or 1)
+- offset registers have increment bit
+
+== Credits ==
+
+asadafag -- testing kernels, input on unknown bit fields, and general suggestions.
+Sylvain Collange -- information on mad instruction and help with test cases.
+#nouveau -- help with intercepting the shader code for fragment/vertex/geometry programs
+
+== Citings ==
+
+Some interesting papers to read that use decuda for their work:
+
+- Barra, a Modular Functional GPU Simulator for GPGPU
+Sylvain Collange and David Defour and David Parello
+http://hal.archives-ouvertes.fr/docs/00/37/47/15/PDF/stats_on_instruction.pdf
+
+- Benchmarking GPUs to tune dense linear algebra
+Vasily Volkov and James W. Demmel
+Proceedings of the 2008 ACM/IEEE conference on Supercomputing
+http://portal.acm.org/citation.cfm?id=1413402
+
+Mail me if you know anything I forgot to include.
+
+== Legal ==
+
+See the LICENSE file.
+
+Do whatever you like with this source, use it to speed up your CUDA kernels,
+make debuggers, emulators or other interesting projects. But please let me
+know if you do.

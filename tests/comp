@@ -1,0 +1,2 @@
+#!/bin/bash
+nvcc $1.cu -O2 -ptx

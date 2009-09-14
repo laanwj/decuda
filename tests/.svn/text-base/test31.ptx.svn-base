@@ -1,0 +1,21 @@
+.version 1.0
+.target compute_10, map_f64_to_f32
+
+.entry bra_test
+{
+.reg .u32 $r1,$r2;
+.reg .u64 $rd1,$rd2;
+.reg .f32 $f1;
+.param .u64 __cudaparm_data;
+.param .u64 __cudaparm_data2;
+
+ld.param.u64 	$rd1, [__cudaparm_data2];
+ld.global.s32 	$r1, [$rd1+0]; 
+cvt.rz.f32.s32 	$f1, $r1;
+ld.param.u64 	$rd2, [__cudaparm_data];
+st.global.f32 	[$rd2+0], $f1;
+cvt.rzi.s32.f32 	$r2, $f1;
+st.global.s32 	[$rd1+0], $r2;
+
+exit;
+}

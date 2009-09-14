@@ -1,0 +1,3 @@
+#!/bin/bash
+../decuda -o $1.asm $1.cubin
+../cudasm -o $1.cubina $1.asm

@@ -1,0 +1,2 @@
+#!/bin/bash
+ptxas $1.ptx -o $1.cubin

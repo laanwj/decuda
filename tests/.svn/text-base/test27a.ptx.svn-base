@@ -1,0 +1,102 @@
+
+// general playing ground
+
+       .version 1.0
+       .target compute_11, map_f64_to_f32
+
+       .entry my_kernel
+       {
+       .reg .u32 $r0,$r1,$r2,$r3;
+       .reg .u64 $rd1, $rd2;
+       .reg .f32 $f0, $f1, $f2, $f3,
+               $f9,
+               $f27,$f28,$f29,$f30,
+               $f39,$f40,$f41,$f42,$f43,$f44,$f45,$f46,$f47,$f48;
+       .param .u64 __cudaparm_x;
+       .reg .pred $p0,$p1;
+
+ld.param.u64    $rd1, [__cudaparm_x];
+
+ld.global.v2.u32  {$r0,$r1}, [$rd1+0];
+
+//cvt.s64.s32 $rd2, $r0;
+//div.s32 $r2, $r0, $r1;
+
+cvt.u32.u16     $r2, %gridid;
+st.global.u32  [$rd1+0], $r2;
+
+
+mov.b32 $f0, $r0;
+mov.b32 $f1, $r1;
+mov.b32 $f2, $r2;
+
+// round-toward-zero
+// exercise rounding modes
+mad.rn.f32 $f0, $f1, $f2, $f0;
+mad.rm.f32 $f1, $f1, $f1, $f0;
+mad.rp.f32 $f2, $f2, $f3, $f1;
+mad.rz.f32 $f2, $f3, $f2, $f0;
+
+// MAC: a += b*x
+mad.rn.f32 $f0, 0F3f800001, $f2, $f0;
+mad.rn.f32 $f0, 0F3f800001, $f2, $f0;
+
+mad.rn.f32 $f0, 0F3f800001, $f0, 0F3f800002;
+mad.rn.f32 $f0, 0F3f800003, $f0, 0F3f800004;
+
+// a*x - b
+mul.f32 $f0, $f0, 0F3f800001;
+sub.f32 $f0, $f0, $f1;
+
+// b - a*x
+mul.f32 $f0, $f0, 0F3f800002;
+sub.f32 $f0, $f1, $f0;
+
+// -a*x - b
+mul.f32 $f0, $f0, 0F3f800001;
+add.f32 $f0, $f0, $f1;
+neg.f32 $f0, $f0;
+
+// MAC: a -= b*x
+mul.f32         $f29, $f1, 0f3fc90000;
+sub.f32         $f0, $f0, $f29;
+
+
+add.rz.f32 $f0, $f0, $f2;
+
+
+mov.b32 $r1, $f0;
+//slct.f32.f32 $r0, $r1, $r2, $r3;
+
+mad24.lo.u32 $r0, 40, $r0, 2;
+
+// a*x - b
+mul24.lo.u32 $r0, $r0, 17;
+sub.u32 $r0, $r0, $r1;
+
+// b - a*x
+mul24.lo.u32 $r0, $r0, 17;
+sub.u32 $r0, $r1, $r0;
+
+
+
+//cvt.u32.u32 $r0, %clock;
+
+//atom.global.add.f32 $r3, [$rd1+4], $r2;
+//atom.global.add.f32 $r2, [$rd1+8], $r2;
+st.global.v4.s32  [$rd1+4], {$r0,$r1,$r2,$r3};
+//atom.global.add.f32 $r3, [$rd1+4], $r2;
+//st.global.v4.s32  [$rd1+4], {$r0,$r1,$r2,$r3};
+
+//atom.global.and.b32 $r3, [$rd1+4], $r2;
+//atom.global.or.b32 $r3, [$rd1+4], $r2;
+//atom.global.xor.b32 $r3, [$rd1+4], $r2;
+//atom.global.inc.u32 $r3, [$rd1+4], $r2;
+//atom.global.dec.u32 $r3, [$rd1+4], $r2;
+//atom.global.add.u32 $r3, [$rd1+4], $r2;
+//atom.global.min.u32 $r3, [$rd1+4], $r2;
+//atom.global.max.u32 $r3, [$rd1+4], $r2;
+//atom.global.exch.u32 $r3, [$rd1+4], $r2;
+       exit;
+
+       } // my_kernel

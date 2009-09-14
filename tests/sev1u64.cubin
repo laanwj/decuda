@@ -1,0 +1,27 @@
+architecture {sm_10}
+abiversion {0}
+modname {cubin}
+code  {
+	name = my_kernel
+	lmem = 0
+	smem = 32
+	reg = 4
+	bar = 0
+	bincode  {
+		0x1000cc01 0x0423c780 0xd00e0009 0x80800780 
+		0x308007fd 0x644087c8 0x308105fd 0x644102c8 
+		0x308007fd 0x64410148 0x10038001 0x00000003 
+		0x10000401 0x0403c280 0x10008005 0x00000003 
+		0x10000605 0x0403c280 0x1000c809 0x0423c780 
+		0xd00e0401 0xa0800781 
+	}
+	const  {
+		segname = const
+		segnum = 1
+		offset = 0
+		bytes = 8
+		mem  {
+			0000000000 0x00000003 
+		}
+	}
+}

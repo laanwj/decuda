@@ -1,0 +1,15 @@
+architecture {sm_10}
+abiversion {0}
+modname {cubin}
+code  {
+	name = my_kernel
+	lmem = 0
+	smem = 32
+	reg = 2
+	bar = 0
+	bincode  {
+		0x1100e804 0x1100ec00 0xd00e0001 0x80c00780 
+		0xc0000001 0x04040003 0xa0000001 0xc4084780 
+		0xd00e0201 0xa0c00781 
+	}
+}

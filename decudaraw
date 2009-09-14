@@ -1,0 +1,27 @@
+#!/usr/bin/python
+# sm1_1 (G80) disassembler (decuda)
+# Wladimir J. van der Laan <laanwj@gmail.com>, 2007
+
+from Disass import *
+from CubinFile import *
+from sys import stdout, stderr
+import sys, getopt
+from array import array
+
+def main():
+    data = sys.argv[1:]
+    ex = []
+    for x in data:
+        ex.extend(x.split(","))
+    data = [int(x,0) for x in ex]
+
+    kernel = Kernel()
+    kernel.name = "unknown"
+    kernel.bincode = data
+
+    formatter = AnsiFormatter()
+    kernel.disassemble(sys.stdout, formatter)
+
+if __name__ == "__main__":
+    main()
+

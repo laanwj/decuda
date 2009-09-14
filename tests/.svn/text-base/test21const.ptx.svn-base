@@ -1,0 +1,238 @@
+	.version 1.0
+	.target compute_10, map_f64_to_f32
+	//  compiled with /usr/local/cuda/open64/lib//be
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_00002098_00000000-1.i (/tmp/ccI#.l8pNmJ)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:compute_10, Endian:little, Pointer Size:64
+	//  -O2	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"/tmp/tmpxft_00002098_00000000-5.gpu"
+	.file	2	"/usr/lib/gcc/x86_64-linux-gnu/4.1.2/include/stddef.h"
+	.file	3	"/usr/local/cuda/bin/../include/crt/device_runtime.h"
+	.file	4	"/usr/local/cuda/bin/../include/host_defines.h"
+	.file	5	"/usr/local/cuda/bin/../include/crt/storage_class.h"
+	.file	6	"/usr/local/cuda/bin/../include/builtin_types.h"
+	.file	7	"/usr/local/cuda/bin/../include/device_types.h"
+	.file	8	"/usr/local/cuda/bin/../include/driver_types.h"
+	.file	9	"/usr/local/cuda/bin/../include/texture_types.h"
+	.file	10	"/usr/local/cuda/bin/../include/vector_types.h"
+	.file	11	"/usr/local/cuda/bin/../include/device_launch_parameters.h"
+	.file	12	"/home/wladimir/dump/test20.cu"
+	.file	13	"/usr/local/cuda/bin/../include/common_functions.h"
+	.file	14	"/usr/local/cuda/bin/../include/crt/func_macro.h"
+	.file	15	"/usr/local/cuda/bin/../include/math_functions.h"
+	.file	16	"/usr/local/cuda/bin/../include/device_functions.h"
+	.file	17	"/usr/local/cuda/bin/../include/math_constants.h"
+	.file	18	"/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+	.file	19	"/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+	.file	20	"/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h"
+
+
+	.entry my_kernel
+	{
+	.reg .u32 $r0,$r1,$r2,$r3,$r4,$r5,$r6,$r7,$r8,$r9,$r10,$r11,$r12,$r13,$r14,$r15,$r16,$r17,$r18,$r19,$r20,$r21,$r22,$r23,
+		  $r24, $r25, $r26, $r27, $r28, $r29;
+	.reg .u64 $rd1,$rd2;
+	.param .u64 __cudaparm_x;
+	.param .u64 __cudaparm_y;
+//	.loc	12	1	0
+$LBB1_my_kernel:
+//	.loc	12	3	0
+//	trap;
+//	bar.sync 1;
+	ld.param.u64 	$rd1, [__cudaparm_x];
+//	ld.param.u64 	$rd1, [__cudaparm_y];
+
+
+ld.const.s32   $r0,[$rd1+0];
+
+
+ld.const.s32   $r1,[$rd1+4];
+
+
+ld.const.s32   $r2,[$rd1+9];
+
+
+ld.const.s32   $r3,[$rd1+13];
+
+
+ld.const.s32   $r4,[$rd1+17];
+
+
+ld.const.s32   $r5,[$rd1+21];
+
+
+ld.const.s32   $r6,[$rd1+24];
+
+
+ld.const.s32   $r7,[$rd1+28];
+
+
+ld.const.s32   $r8,[$rd1+32];
+
+
+ld.const.s32   $r9,[$rd1+36];
+
+
+ld.const.s32   $r10,[$rd1+40];
+
+
+ld.const.s32   $r11,[$rd1+44];
+
+
+ld.const.s32   $r12,[$rd1+48];
+
+
+ld.const.s32   $r13,[$rd1+52];
+
+
+ld.const.s32   $r14,[$rd1+56];
+
+
+ld.const.s32   $r15,[$rd1+60];
+
+
+ld.const.s32   $r16,[$rd1+64];
+
+
+ld.const.s32   $r17,[$rd1+68];
+
+
+ld.const.s32   $r18,[$rd1+72];
+
+
+ld.const.s32   $r19,[$rd1+76];
+
+
+ld.const.s32   $r20,[$rd1+80];
+
+
+ld.const.s32   $r21,[$rd1+84];
+
+
+ld.const.s32   $r22,[$rd1+88];
+
+
+ld.const.s32   $r23,[$rd1+92];
+
+
+ld.const.s32   $r24,[$rd1+96];
+
+
+ld.const.s32   $r25,[$rd1+100];
+
+
+ld.const.s32   $r26,[$rd1+104];
+
+
+ld.const.s32   $r27,[$rd1+108];
+
+
+ld.const.s32   $r28,[$rd1+112];
+
+
+ld.const.s32   $r29,[$rd1+116];
+
+
+st.global.s32   [$rd1+0], $r0;
+
+
+st.global.s32   [$rd1+4], $r1;
+
+
+st.global.s32   [$rd1+8], $r2;
+
+
+st.global.s32   [$rd1+12], $r3;
+
+
+st.global.s32   [$rd1+16], $r4;
+
+
+st.global.s32   [$rd1+20], $r5;
+
+
+st.global.s32   [$rd1+24], $r6;
+
+
+st.global.s32   [$rd1+28], $r7;
+
+
+st.global.s32   [$rd1+32], $r8;
+
+
+st.global.s32   [$rd1+36], $r9;
+
+
+st.global.s32   [$rd1+40], $r10;
+
+
+st.global.s32   [$rd1+44], $r11;
+
+
+st.global.s32   [$rd1+48], $r12;
+
+
+st.global.s32   [$rd1+52], $r13;
+
+
+st.global.s32   [$rd1+56], $r14;
+
+
+st.global.s32   [$rd1+60], $r15;
+
+
+st.global.s32   [$rd1+64], $r16;
+
+
+st.global.s32   [$rd1+68], $r17;
+
+
+st.global.s32   [$rd1+72], $r18;
+
+
+st.global.s32   [$rd1+76], $r19;
+
+
+st.global.s32   [$rd1+80], $r20;
+
+
+st.global.s32   [$rd1+84], $r21;
+
+
+st.global.s32   [$rd1+88], $r22;
+
+
+st.global.s32   [$rd1+92], $r23;
+
+
+st.global.s32   [$rd1+96], $r24;
+
+
+st.global.s32   [$rd1+100], $r25;
+
+
+st.global.s32   [$rd1+104], $r26;
+
+
+st.global.s32   [$rd1+108], $r27;
+
+
+st.global.s32   [$rd1+112], $r28;
+
+
+st.global.s32   [$rd1+116], $r29;
+
+
+	exit;
+
+	} // my_kernel

@@ -1,0 +1,147 @@
+	.version 1.0
+	.target compute_10, map_f64_to_f32
+	//  compiled with /usr/local/cuda/open64/lib//be
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_000015b5_00000000-1.i (/tmp/ccI#.RMiSW3)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:compute_10, Endian:little, Pointer Size:64
+	//  -O2	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"/tmp/tmpxft_000015b5_00000000-5.gpu"
+	.file	2	"/usr/lib/gcc/x86_64-linux-gnu/4.1.2/include/stddef.h"
+	.file	3	"/usr/local/cuda/bin/../include/crt/device_runtime.h"
+	.file	4	"/usr/local/cuda/bin/../include/host_defines.h"
+	.file	5	"/usr/local/cuda/bin/../include/crt/storage_class.h"
+	.file	6	"/usr/local/cuda/bin/../include/builtin_types.h"
+	.file	7	"/usr/local/cuda/bin/../include/device_types.h"
+	.file	8	"/usr/local/cuda/bin/../include/driver_types.h"
+	.file	9	"/usr/local/cuda/bin/../include/texture_types.h"
+	.file	10	"/usr/local/cuda/bin/../include/vector_types.h"
+	.file	11	"/usr/local/cuda/bin/../include/device_launch_parameters.h"
+	.file	12	"/home/wladimir/decuda/tests/test22.cu"
+	.file	13	"/usr/local/cuda/bin/../include/common_functions.h"
+	.file	14	"/usr/local/cuda/bin/../include/crt/func_macro.h"
+	.file	15	"/usr/local/cuda/bin/../include/math_functions.h"
+	.file	16	"/usr/local/cuda/bin/../include/device_functions.h"
+	.file	17	"/usr/local/cuda/bin/../include/math_constants.h"
+	.file	18	"/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+	.file	19	"/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+	.file	20	"/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h"
+
+
+	.entry my_kernel
+	{
+	.reg .u16 $rh1,$rh2,$rh3,$rh4,$rh5,$rh6,$rh7,$rh8,$rh9,
+		$rh10,$rh11,$rh12,$rh13,$rh14,$rh15,$rh16,$rh17,$rh18,$rh19,
+		$rh20,$rh21,$rh22,$rh23,$rh24,$rh25,$rh26,$rh27,$rh28;
+	.reg .u64 $rd1;
+	.param .s16 __cudaparm_a;
+	.param .u64 __cudaparm_dest;
+	.param .s16 __cudaparm_b;
+	.param .s16 __cudaparm_c;
+	.param .s16 __cudaparm_d;
+	.param .s16 __cudaparm_e;
+	.param .s16 __cudaparm_f;
+	.param .s16 __cudaparm_g;
+	.param .s16 __cudaparm_h;
+	.param .s16 __cudaparm_i;
+	.param .s16 __cudaparm_j;
+	.param .s16 __cudaparm_k;
+	.shared .align 4 .b8 x[80];
+	.loc	12	2	0
+$LBB1_my_kernel:
+	.loc	12	5	0
+	ld.param.u64 	$rd1, [__cudaparm_dest];	//  id:87 __cudaparm_dest+0x0
+	ld.param.s16 	$rh1, [__cudaparm_a];	//  id:88 __cudaparm_a+0x0
+	st.global.s16 	[$rd1+0], $rh1;	//  id:89
+	.loc	12	6	0
+	ld.param.s16 	$rh2, [__cudaparm_b];	//  id:90 __cudaparm_b+0x0
+	st.global.s16 	[$rd1+2], $rh2;	//  id:91
+	.loc	12	7	0
+	ld.param.s16 	$rh3, [__cudaparm_c];	//  id:92 __cudaparm_c+0x0
+	st.global.s16 	[$rd1+4], $rh3;	//  id:93
+	.loc	12	8	0
+	ld.param.s16 	$rh4, [__cudaparm_d];	//  id:94 __cudaparm_d+0x0
+	st.global.s16 	[$rd1+6], $rh4;	//  id:95
+	.loc	12	9	0
+	ld.param.s16 	$rh5, [__cudaparm_e];	//  id:96 __cudaparm_e+0x0
+	st.global.s16 	[$rd1+8], $rh5;	//  id:97
+	.loc	12	10	0
+	ld.param.s16 	$rh6, [__cudaparm_f];	//  id:98 __cudaparm_f+0x0
+	st.global.s16 	[$rd1+10], $rh6;	//  id:99
+	.loc	12	11	0
+	ld.param.s16 	$rh7, [__cudaparm_g];	//  id:100 __cudaparm_g+0x0
+	st.global.s16 	[$rd1+12], $rh7;	//  id:101
+	.loc	12	12	0
+	ld.param.s16 	$rh8, [__cudaparm_h];	//  id:102 __cudaparm_h+0x0
+	st.global.s16 	[$rd1+14], $rh8;	//  id:103
+	.loc	12	13	0
+	ld.param.s16 	$rh9, [__cudaparm_i];	//  id:104 __cudaparm_i+0x0
+	st.global.s16 	[$rd1+16], $rh9;	//  id:105
+	.loc	12	14	0
+	ld.param.s16 	$rh10, [__cudaparm_j];	//  id:106 __cudaparm_j+0x0
+	st.global.s16 	[$rd1+18], $rh10;	//  id:107
+	.loc	12	15	0
+	ld.param.s16 	$rh11, [__cudaparm_k];	//  id:108 __cudaparm_k+0x0
+	st.global.s16 	[$rd1+20], $rh11;	//  id:109
+	.loc	12	16	0
+	ld.shared.s16 	$rh12, [x+0];  	//  id:110 x+0x0
+	st.global.s16 	[$rd1+20], $rh12;	//  id:111
+	.loc	12	17	0
+	ld.shared.s16 	$rh13, [x+4];  	//  id:112 x+0x4
+	st.global.s16 	[$rd1+22], $rh13;	//  id:113
+	.loc	12	18	0
+	ld.shared.s16 	$rh14, [x+8];  	//  id:114 x+0x8
+	st.global.s16 	[$rd1+24], $rh14;	//  id:115
+	.loc	12	19	0
+	ld.shared.s16 	$rh15, [x+12]; 	//  id:116 x+0xc
+	st.global.s16 	[$rd1+26], $rh15;	//  id:117
+	.loc	12	20	0
+	ld.shared.s16 	$rh16, [x+16]; 	//  id:118 x+0x10
+	st.global.s16 	[$rd1+28], $rh16;	//  id:119
+	.loc	12	21	0
+	ld.shared.s16 	$rh17, [x+20]; 	//  id:120 x+0x14
+	st.global.s16 	[$rd1+30], $rh17;	//  id:121
+	.loc	12	22	0
+	ld.shared.s16 	$rh18, [x+24]; 	//  id:122 x+0x18
+	st.global.s16 	[$rd1+32], $rh18;	//  id:123
+	.loc	12	23	0
+	ld.shared.s16 	$rh19, [x+28]; 	//  id:124 x+0x1c
+	st.global.s16 	[$rd1+34], $rh19;	//  id:125
+	.loc	12	24	0
+	ld.shared.s16 	$rh20, [x+32]; 	//  id:126 x+0x20
+	st.global.s16 	[$rd1+36], $rh20;	//  id:127
+	.loc	12	25	0
+	ld.shared.s16 	$rh21, [x+36]; 	//  id:128 x+0x24
+	st.global.s16 	[$rd1+38], $rh21;	//  id:129
+	.loc	12	26	0
+	ld.shared.s16 	$rh22, [x+40]; 	//  id:130 x+0x28
+	st.global.s16 	[$rd1+40], $rh22;	//  id:131
+	.loc	12	27	0
+	ld.shared.s16 	$rh23, [x+44]; 	//  id:132 x+0x2c
+	st.global.s16 	[$rd1+42], $rh23;	//  id:133
+	.loc	12	28	0
+	ld.shared.s16 	$rh24, [x+48]; 	//  id:134 x+0x30
+	st.global.s16 	[$rd1+44], $rh24;	//  id:135
+	.loc	12	29	0
+	ld.shared.s16 	$rh25, [x+52]; 	//  id:136 x+0x34
+	st.global.s16 	[$rd1+46], $rh25;	//  id:137
+	.loc	12	30	0
+	ld.shared.s16 	$rh26, [x+56]; 	//  id:138 x+0x38
+	st.global.s16 	[$rd1+48], $rh26;	//  id:139
+	.loc	12	31	0
+	ld.shared.s16 	$rh27, [x+60]; 	//  id:140 x+0x3c
+	st.global.s16 	[$rd1+50], $rh27;	//  id:141
+	.loc	12	32	0
+	ld.shared.s16 	$rh28, [x+64]; 	//  id:142 x+0x40
+	st.global.s16 	[$rd1+52], $rh28;	//  id:143
+	exit;                         	//  
+	} // my_kernel

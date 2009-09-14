@@ -1,0 +1,3 @@
+#!/bin/bash
+nvcc $1.cu -O2 -ptx
+ptxas $1.ptx -o $1.cubin

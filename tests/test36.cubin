@@ -1,0 +1,75 @@
+architecture {sm_10}
+abiversion {0}
+modname {cubin}
+consts  {
+	name = ww
+	segname = const
+	segnum = 0
+	offset = 8
+	bytes = 40
+}
+consts  {
+	name = vv
+	segname = const
+	segnum = 0
+	offset = 4
+	bytes = 4
+}
+consts  {
+	name = uu
+	segname = const
+	segnum = 0
+	offset = 0
+	bytes = 4
+}
+reloc  {
+	name = xx2
+	segname = reloc
+	segnum = 14
+	offset = 4
+	bytes = 8
+}
+reloc  {
+	name = xx
+	segname = reloc
+	segnum = 14
+	offset = 0
+	bytes = 4
+}
+code  {
+	name = f_test
+	lmem = 0
+	smem = 32
+	reg = 6
+	bar = 0
+	bincode  {
+		0x1100e804 0x1100ec08 0x10000029 0x00000003 
+		0xd00e0201 0x80000780 0x2038820d 0x0fffffff 
+		0xd00e0611 0x80c00780 0xd00e0401 0xa0000780 
+		0x2002840d 0x00000003 0x30100801 0xe4100780 
+		0xd00e0601 0xa0000780 0x20048205 0x00000003 
+		0x20018409 0x00000003 0x20011429 0x00000003 
+		0x308015fd 0x604147c8 0x10002003 0x00000280 
+		0x1100e800 0x1100e808 0x10000005 0x2400c780 
+		0xd00e0005 0xa0c00780 0x2104e805 0x00000003 
+		0x10000401 0x20008780 0xa0000001 0x0c010780 
+		0xd00e0201 0xa0c00780 0x10088001 0x00000003 
+		0x00000005 0xc0000780 0x10000009 0x00000003 
+		0x16000201 0x2400c780 0xd00e0401 0xa0c00780 
+		0x20048409 0x00000003 0x20010409 0x00000003 
+		0x308005fd 0x604147c8 0x10018003 0x00000280 
+		0x10000005 0x2780c780 0x10000001 0x2400c780 
+		0xd00e0201 0xa0c00780 0x10000209 0x2780c780 
+		0x10000001 0x2780c780 0x10008005 0x00000003 
+		0xd00e0401 0xa0800781 
+	}
+	const  {
+		segname = const
+		segnum = 1
+		offset = 0
+		bytes = 4
+		mem  {
+			0x0000000a 
+		}
+	}
+}

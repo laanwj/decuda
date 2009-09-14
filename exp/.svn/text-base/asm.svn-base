@@ -1,0 +1,2 @@
+#!/bin/bash
+../cudasm -o $1.cubin $1.asm 

@@ -1,0 +1,63 @@
+// general playing ground
+
+	.version 1.0
+	.target compute_11, map_f64_to_f32
+
+	.entry my_kernel
+	{
+	.reg .u32 $r0,$r1,$r2,$r3;
+        .reg .u64 $rd1, $rd2;
+	.param .u64 __cudaparm_x;
+        .reg .pred $p0,$p1;
+
+ld.param.u64 	$rd1, [__cudaparm_x];
+
+ld.global.v2.u32  {$r0,$r1}, [$rd1+0];
+
+//cvt.s64.s32 $rd2, $r0;
+//div.s32 $r2, $r0, $r1;
+
+cvt.u32.u16     $r2, %gridid;
+st.global.u32  [$rd1+0], $r2;
+
+
+// WOW this seems to cause an overflow in the instruction id
+// op 4->5
+//mad24.hi.sat.s32 $r0,$r1,$r2,$r3;
+
+//mul.rz.f32  $r0,$r1,$r2;
+//add.s32.sat $r0, $r1, $r2;
+//sub.s32 $r1, $r2, $r3;
+//add.sat.s32 $r0, $r1, $r2;
+sad.u32 $r0,$r1,$r2,$r3;
+//add.rn.f32 $r0,$r1,$r2;
+//neg.s32 $r0, $r1;
+//neg.f32 $r1, $r0;
+//setp.eq.u32 $p1, $r2, $r3;
+//setp.lt.and.u32 $p0, $r1, $r2, $p1;
+//selp.f32 $r0, $r1, $r2, $p0;
+//selp.f32 $r1, $r1, $r2, $p0;
+
+//slct.f32.f32 $r0, $r1, $r2, $r3;
+
+
+cvt.u32.u32 $r0, %clock;
+
+//atom.global.add.f32 $r3, [$rd1+4], $r2;
+//atom.global.add.f32 $r2, [$rd1+8], $r2;
+st.global.v4.s32  [$rd1+4], {$r0,$r1,$r2,$r3};
+//atom.global.add.f32 $r3, [$rd1+4], $r2;
+//st.global.v4.s32  [$rd1+4], {$r0,$r1,$r2,$r3};
+
+//atom.global.and.b32 $r3, [$rd1+4], $r2;
+//atom.global.or.b32 $r3, [$rd1+4], $r2;
+//atom.global.xor.b32 $r3, [$rd1+4], $r2;
+//atom.global.inc.u32 $r3, [$rd1+4], $r2;
+//atom.global.dec.u32 $r3, [$rd1+4], $r2;
+//atom.global.add.u32 $r3, [$rd1+4], $r2;
+//atom.global.min.u32 $r3, [$rd1+4], $r2;
+//atom.global.max.u32 $r3, [$rd1+4], $r2;
+//atom.global.exch.u32 $r3, [$rd1+4], $r2;
+	exit;
+
+	} // my_kernel

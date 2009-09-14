@@ -1,0 +1,14 @@
+architecture {sm_10}
+abiversion {0}
+modname {cubin}
+code  {
+	name = bra_test
+	lmem = 0
+	smem = 24
+	reg = 2
+	bar = 0
+	bincode  {
+		0x00000001 0x60014780 0x1000c805 0x0423c780 
+		0xd00e0201 0xa0600781 
+	}
+}

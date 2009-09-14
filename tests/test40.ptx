@@ -1,0 +1,102 @@
+	.version 1.0
+	.target compute_10, map_f64_to_f32
+	//  compiled with /usr/local/cuda/open64/lib//be
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_0000273a_00000000-1.i (/tmp/ccI#.jOCx76)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:compute_10, Endian:little, Pointer Size:64
+	//  -O2	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"/tmp/tmpxft_0000273a_00000000-5.gpu"
+	.file	2	"/usr/lib/gcc/x86_64-linux-gnu/4.1.2/include/stddef.h"
+	.file	3	"/usr/local/cuda/bin/../include/crt/device_runtime.h"
+	.file	4	"/usr/local/cuda/bin/../include/host_defines.h"
+	.file	5	"/usr/local/cuda/bin/../include/crt/storage_class.h"
+	.file	6	"/usr/local/cuda/bin/../include/builtin_types.h"
+	.file	7	"/usr/local/cuda/bin/../include/device_types.h"
+	.file	8	"/usr/local/cuda/bin/../include/driver_types.h"
+	.file	9	"/usr/local/cuda/bin/../include/texture_types.h"
+	.file	10	"/usr/local/cuda/bin/../include/vector_types.h"
+	.file	11	"/usr/local/cuda/bin/../include/device_launch_parameters.h"
+	.file	12	"/home/wladimir/decuda/tests/test40.cu"
+	.file	13	"/usr/local/cuda/bin/../include/common_functions.h"
+	.file	14	"/usr/local/cuda/bin/../include/crt/func_macro.h"
+	.file	15	"/usr/local/cuda/bin/../include/math_functions.h"
+	.file	16	"/usr/local/cuda/bin/../include/device_functions.h"
+	.file	17	"/usr/local/cuda/bin/../include/math_constants.h"
+	.file	18	"/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+	.file	19	"/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+	.file	20	"/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h"
+
+	.extern	.shared .align 4 .b8 sha[];
+
+	.entry my_kernel
+	{
+	.reg .u32 $r1,$r2,$r3,$r4,$r5,$r6,$r7,$r8;
+	.reg .u64 $rd1,$rd2,$rd3,$rd4,$rd5,$rd6,$rd7,$rd8,$rd9,
+		$rd10;
+	.reg .pred $p0,$p1,$p2,$p3,$p4,$p5;
+	.param .u64 __cudaparm_out;
+	.param .s32 __cudaparm_width;
+	.loc	12	1	0
+$LBB1_my_kernel:
+	ld.param.s32 	$r1, [__cudaparm_width];	//  id:30 __cudaparm_width+0x0
+	div.s32 	$r2, $r1, 2;         	//  
+	mov.s32 	$r3, 3;              	//  
+	setp.gt.s32 	$p1, $r2, $r3;   	//  
+	mov.s32 	$r4, 3;              	//  
+	mov.u64 	$rd1, sha;           	//  
+	@!$p1 bra 	$Lt_0_13;          	//  
+	ld.param.u64 	$rd2, [__cudaparm_out];	//  id:31 __cudaparm_out+0x0
+$Lt_0_7:
+ //<loop> Loop body line 8
+	.loc	12	8	0
+	cvt.s64.s32 	$rd3, $r4;       	//  
+	mul.lo.u64 	$rd4, $rd3, 4;    	//  
+	add.u64 	$rd5, $rd4, $rd1;    	//  
+	mov.s32 	$r5, 200;            	//  
+	st.shared.s32 	[$rd5+0], $r5; 	//  id:32 sha+0x0
+	.loc	12	9	0
+	add.u64 	$rd6, $rd4, $rd2;    	//  
+	ld.shared.s32 	$r6, [$rd5+4]; 	//  id:33 sha+0x0
+	st.global.s32 	[$rd6+0], $r6; 	//  id:34
+	.loc	12	10	0
+	ld.global.s32 	$r4, [$rd6+4]; 	//  id:35
+	setp.gt.s32 	$p2, $r2, $r4;   	//  
+	@$p2 bra 	$Lt_0_7;            	//  
+	bra.uni 	$Lt_0_5;             	//  
+$Lt_0_13:
+	mov.pred 	$p2, $p1;           	//  
+	mov.pred 	$p3, $p4;           	//  
+$Lt_0_5:
+	.loc	12	12	0
+	bar.sync 	0;                  	//  
+	@!$p2 bra 	$Lt_0_9;           	//  
+	ld.param.u64 	$rd2, [__cudaparm_out];	//  id:31 __cudaparm_out+0x0
+$Lt_0_11:
+ //<loop> Loop body line 12, nesting depth: 1, estimated iterations: unknown
+	.loc	12	15	0
+	cvt.s64.s32 	$rd7, $r4;       	//  
+	mul.lo.u64 	$rd8, $rd7, 4;    	//  
+	add.u64 	$rd9, $rd8, $rd1;    	//  
+	mov.s32 	$r7, 200;            	//  
+	st.shared.s32 	[$rd9+0], $r7; 	//  id:36 sha+0x0
+	.loc	12	16	0
+	add.u64 	$rd10, $rd8, $rd2;   	//  
+	ld.shared.s32 	$r8, [$rd9+4]; 	//  id:37 sha+0x0
+	st.global.s32 	[$rd10+0], $r8;	//  id:38
+	.loc	12	17	0
+	ld.global.s32 	$r4, [$rd10+4];	//  id:39
+	setp.gt.s32 	$p5, $r2, $r4;   	//  
+	@$p5 bra 	$Lt_0_11;           	//  
+$Lt_0_9:
+	exit;                         	//  
+	} // my_kernel

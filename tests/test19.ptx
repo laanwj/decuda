@@ -1,0 +1,60 @@
+	.version 1.0
+	.target compute_10, map_f64_to_f32
+	//  compiled with /usr/local/cuda/open64/lib//be
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_00001de7_00000000-1.i (/tmp/ccI#.wmyIqD)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:compute_10, Endian:little, Pointer Size:64
+	//  -O2	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"/tmp/tmpxft_00001de7_00000000-5.gpu"
+	.file	2	"/usr/lib/gcc/x86_64-linux-gnu/4.1.2/include/stddef.h"
+	.file	3	"/usr/local/cuda/bin/../include/crt/device_runtime.h"
+	.file	4	"/usr/local/cuda/bin/../include/host_defines.h"
+	.file	5	"/usr/local/cuda/bin/../include/crt/storage_class.h"
+	.file	6	"/usr/local/cuda/bin/../include/builtin_types.h"
+	.file	7	"/usr/local/cuda/bin/../include/device_types.h"
+	.file	8	"/usr/local/cuda/bin/../include/driver_types.h"
+	.file	9	"/usr/local/cuda/bin/../include/texture_types.h"
+	.file	10	"/usr/local/cuda/bin/../include/vector_types.h"
+	.file	11	"/usr/local/cuda/bin/../include/device_launch_parameters.h"
+	.file	12	"/home/wladimir/dump/test19.cu"
+	.file	13	"/usr/local/cuda/bin/../include/common_functions.h"
+	.file	14	"/usr/local/cuda/bin/../include/crt/func_macro.h"
+	.file	15	"/usr/local/cuda/bin/../include/math_functions.h"
+	.file	16	"/usr/local/cuda/bin/../include/device_functions.h"
+	.file	17	"/usr/local/cuda/bin/../include/math_constants.h"
+	.file	18	"/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+	.file	19	"/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+	.file	20	"/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h"
+
+
+	.entry my_kernel
+	{
+	.reg .u32 $r1,$r2,$r3,$r4,$r5,$r6,$r7;
+	.reg .u64 $rd1,$rd2;
+	.param .u64 __cudaparm_x;
+	.param .u64 __cudaparm_y;
+	.loc	12	1	0
+$LBB1_my_kernel:
+	.loc	12	3	0
+	ld.param.u64 	$rd1, [__cudaparm_y];	//  id:13 __cudaparm_y+0x0
+	ld.global.s32 	$r1, [$rd1+0]; 	//  id:16
+	ld.global.s32 	$r2, [$rd1+4]; 	//  id:17
+	and.b32 	$r3, $r1, $r2;       	//  
+	ld.global.s32 	$r4, [$rd1+8]; 	//  id:15
+	ld.global.s32 	$r5, [$rd1+12];	//  id:14
+	and.b32 	$r6, $r4, $r5;       	//  
+	and.b32 	$r7, $r3, $r6;       	//  
+	ld.param.u64 	$rd2, [__cudaparm_x];	//  id:18 __cudaparm_x+0x0
+	st.global.s32 	[$rd2+0], $r7; 	//  id:19
+	exit;                         	//  
+	} // my_kernel

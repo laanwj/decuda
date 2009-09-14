@@ -1,0 +1,4 @@
+#!/bin/bash
+#../decuda/Disass2.py $1.cubin
+../decuda $1.cubin
+
