@@ -238,6 +238,9 @@ def load(name):
                 elif cmd == "consts" or cmd == "sampler" or cmd == "reloc":
                     # Ignore
                     inside.append(Dummy())
+                elif cmd == "params_SMEM":
+                    # Ignore
+                    inside.append(Dummy())
                 else:
                     raise ValueError("Invalid environment %s" % cmd)
         elif closebrace != -1:
