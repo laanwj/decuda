@@ -204,6 +204,7 @@ Conditions on zf: zf is ne, nzf is equ
 asadafag -- testing kernels, input on unknown bit fields, and general suggestions.
 Sylvain Collange -- information on mad instruction and help with test cases.
 #nouveau -- help with intercepting the shader code for fragment/vertex/geometry programs
+Imran Haque -- help with decoding ELF format (http://cs.stanford.edu/people/ihaque/elfToCubin.py, http://forums.nvidia.com/index.php?showtopic=172577)
 
 == Citings ==
 
